@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <style>
+    input[type="number"] {
+    width: 100%;
+    border: 0;
+    }
+    input, textarea {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 13px;
+    }
+    </style>
+
+    <!-- TABLA de Muros -->
+    <body>
+        <table dir="ltr" border="1" cellspacing="0" cellpadding="0" class="tabla-computos">
+            <colgroup>
+            <col width="64">
+            <col width="89">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="51">
+            <col width="70">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td colspan="16" rowspan="1" data-sheets-value="[null,2,&quot;Computo de materiales simplificado - Planilla de datos&quot;]" class="cabecera">Computo de materiales simplificado – Planilla de datos</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="4" data-sheets-value="[null,2,&quot;Muro N\u00b0&quot;]">
+                        <div>Muro N°</div>
+                    </td>
+                    <td colspan="1" rowspan="4" data-sheets-value="[null,2,&quot;Tipo de muro (P = portante    /    NP = no portante)&quot;]">
+                        <div>Tipo de muro (P = portante / NP = no portante)</div>
+                    </td>
+                    <td colspan="1" rowspan="3" data-sheets-value="[null,2,&quot;Espesor del muro&quot;]">
+                        <div class="blue-box">Espesor del muro</div>
+                    </td>
+                    <td colspan="1" rowspan="3" data-sheets-value="[null,2,&quot;Largo del muro&quot;]">
+                        <div class="blue-box">Largo del muro</div>
+                    </td>
+                    <td colspan="1" rowspan="3" data-sheets-value="[null,2,&quot;Alto del muro&quot;]">
+                        <div class="blue-box">Alto del muro</div>
+                    </td>
+                    <td colspan="10" rowspan="1" data-sheets-value="[null,2,&quot;Aberturas en el muro&quot;]" class="red-box">Aberturas en el muro</td>
+                    <td colspan="1" rowspan="3" data-sheets-value="[null,2,&quot;Superficie neta&quot;]">
+                        <div>Superficie neta</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;Abertura 1&quot;]" class="red-box">Abertura 1</td>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;Abertura 2&quot;]" class="red-box">Abertura 2</td>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;Abertura 3&quot;]" class="red-box">Abertura 3</td>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;Abertura 4&quot;]" class="red-box">Abertura 4</td>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;Abertura 5&quot;]" class="red-box">Abertura 5</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,2,&quot;Ancho&quot;]" class="red-box">Ancho</td>
+                    <td data-sheets-value="[null,2,&quot;Alto&quot;]" class="red-box">Alto</td>
+                    <td data-sheets-value="[null,2,&quot;Ancho&quot;]" class="red-box">Ancho</td>
+                    <td data-sheets-value="[null,2,&quot;Alto&quot;]" class="red-box">Alto</td>
+                    <td data-sheets-value="[null,2,&quot;Ancho&quot;]" class="red-box">Ancho</td>
+                    <td data-sheets-value="[null,2,&quot;Alto&quot;]" class="red-box">Alto</td>
+                    <td data-sheets-value="[null,2,&quot;Ancho&quot;]" class="red-box">Ancho</td>
+                    <td data-sheets-value="[null,2,&quot;Alto&quot;]" class="red-box">Alto</td>
+                    <td data-sheets-value="[null,2,&quot;Ancho&quot;]" class="red-box">Ancho</td>
+                    <td data-sheets-value="[null,2,&quot;Alto&quot;]" class="red-box">Alto</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,2,&quot;(cm)&quot;]" class="blue-box">(cm)</td>
+                    <td colspan="2" rowspan="1" data-sheets-value="[null,2,&quot;(m)&quot;]" class="blue-box">(m)</td>
+                    <td colspan="10" rowspan="1" data-sheets-value="[null,2,&quot;(m)&quot;]" class="red-box">(m)</td>
+                    <td data-sheets-value="[null,2,&quot;(m2)&quot;]">(m2)</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input class="muroNro" type="number" value="1">
+                    </td>
+                    <td>
+                        <select class='tipoMuro'>
+                            <option value="P">P</option>
+                            <option value="NP">NP</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="espesorMuro">
+                            <option value="7.5">7.5</option>
+                            <option value="10">10</option>
+                            <option value="12.5">12.5</option>
+                            <option value="15">15</option>
+                            <option value="17.5">17.5</option>
+                            <option value="20">20</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="largoMuro" type="number">
+                    </td>
+                    <td>
+                        <input class="altoMuro" type="number">
+                    </td>
+                    <td>
+                        <input class="ancho1" type="number">
+                    </td>
+                    <td>
+                        <input class="alto1" type="number">
+                    </td>
+                    <td>
+                        <input class="ancho2" type="number">
+                    </td>
+                    <td>
+                        <input class="alto2" type="number">
+                    </td>
+                    <td>
+                        <input class="ancho3" type="number">
+                    </td>
+                    <td>
+                        <input class="alto3" type="number">
+                    </td>
+                    <td>
+                        <input class="ancho4" type="number">
+                    </td>
+                    <td>
+                        <input class="alto4" type="number">
+                    </td>
+                    <td>
+                        <input class="ancho5" type="number">
+                    </td>
+                    <td>
+                        <input class="alto5" type="number">
+                    </td>
+                    <td  class="resultado">
+                        <input type="number">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="calcular" value="calcular">Calcular</button>
+        <button id="agregar" >Agregar</button>
+         <!-- TABLA de Muros -->
+
+         <br><br>
+
+
+        <!-- TABLA de Materiales -->
+        <table dir="ltr" border="1" cellspacing="0" cellpadding="0">
+            <colgroup>
+            <col width="74">
+            <col width="74">
+            <col width="74">
+            <col width="74">
+            <col width="74">
+            <col width="74"></colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="6" rowspan="1" data-sheets-value="[null,2,&quot;Computo de materiales simplificado - Res\u00famen&quot;]" class="cabecera">Computo de materiales simplificado – Resúmen</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="7" data-sheets-value="[null,2,&quot;Ladrillo macizo&quot;]" class="cabecera">
+                        <div>Ladrillo macizo</div>
+                    </td>
+                    <td >e (cm)</td>
+                    <td >m2</td>
+                    <td >m2/pallet</td>
+                    <td >pallet</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td >7.5</td>
+                    <td >0.0</td>
+                    <td >20</td>
+                    <td >0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td >10</td>
+                    <td >0.0</td>
+                    <td >15</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,12.5]">12.5</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]" data-sheets-formula="=SUMIF(R7C3:R34C3,12.5,R7C16:R34C16)">0.0</td>
+                    <td data-sheets-value="[null,3,null,12]">12</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,15]">15</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]" data-sheets-formula="=SUMIF(R7C3:R34C3,15,R7C16:R34C16)">0.0</td>
+                    <td data-sheets-value="[null,3,null,10]">10</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,17.5]">17.5</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]" data-sheets-formula="=SUMIF(R7C3:R34C3,17.5,R7C16:R34C16)">0.0</td>
+                    <td data-sheets-value="[null,3,null,9]">9</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,20]">20</td>
+                    <td data-sheets-value="[null,3,null,22.75]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]" data-sheets-formula="=SUMIF(R7C3:R34C3,20,R7C16:R34C16)">22.8</td>
+                    <td data-sheets-value="[null,3,null,7]">7</td>
+                    <td data-sheets-value="[null,3,null,4]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">4</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="4" data-sheets-value="[null,2,&quot;Ladrillo U&quot;]" class="cabecera">
+                        <div>Ladrillo U</div>
+                    </td>
+                    <td data-sheets-value="[null,2,&quot;e (cm)&quot;]">e (cm)</td>
+                    <td data-sheets-value="[null,2,&quot;ml&quot;]">ml</td>
+                    <td data-sheets-value="[null,2,&quot;ml/pallet&quot;]">ml/pallet</td>
+                    <td data-sheets-value="[null,2,&quot;pallet&quot;]">pallet</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,15]">15</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,2,&quot;0&quot;,1]" data-sheets-formula="=SUMIFS(R7C4:R34C4,R7C2:R34C2,&quot;P&quot;,R7C3:R34C3,15)">0</td>
+                    <td data-sheets-value="[null,3,null,24]">24</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,17.5]">17.5</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,2,&quot;0&quot;,1]" data-sheets-formula="=SUMIFS(R7C4:R34C4,R7C2:R34C2,&quot;P&quot;,R7C3:R34C3,17.5)">0</td>
+                    <td data-sheets-value="[null,3,null,20]">20</td>
+                    <td data-sheets-value="[null,3,null,0]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,20]">20</td>
+                    <td data-sheets-value="[null,3,null,5]" data-sheets-numberformat="[null,2,&quot;0&quot;,1]" data-sheets-formula="=SUMIFS(R7C4:R34C4,R7C2:R34C2,&quot;P&quot;,R7C3:R34C3,20)">5</td>
+                    <td data-sheets-value="[null,3,null,20]">20</td>
+                    <td data-sheets-value="[null,3,null,1]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="8" data-sheets-value="[null,2,&quot;Dinteles&quot;]" class="cabecera">
+                        <div>Dinteles</div>
+                    </td>
+                    <td colspan="1" rowspan="2" data-sheets-value="[null,2,&quot;e (cm)&quot;]">
+                        <div>e (cm)</div>
+                    </td>
+                    <td colspan="4" rowspan="1" data-sheets-value="[null,2,&quot;largo (m)&quot;]" data-sheets-numberformat="[null,2,&quot;0&quot;,1]">largo (m)</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,1.2]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]">1.2</td>
+                    <td data-sheets-value="[null,3,null,1.5]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]">1.5</td>
+                    <td data-sheets-value="[null,3,null,2]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]">2.0</td>
+                    <td data-sheets-value="[null,3,null,2.5]" data-sheets-numberformat="[null,2,&quot;0.0&quot;,1]">2.5</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,7.5]">7.5</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,10]">10</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,12.5]">12.5</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,15]">15</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,17.5]">17.5</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,3,null,20]">20</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="2" data-sheets-value="[null,2,&quot;Adhesivo&quot;]" class="cabecera">
+                        <div>Adhesivo</div>
+                    </td>
+                    <td data-sheets-value="[null,2,&quot;d&quot;]">d</td>
+                    <td data-sheets-value="[null,2,&quot;kg&quot;]">kg</td>
+                    <td data-sheets-value="[null,2,&quot;kg/un&quot;]">kg/un</td>
+                    <td data-sheets-value="[null,2,&quot;un&quot;]">un</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-sheets-value="[null,2,&quot;x 30 kg&quot;]">x 30 kg</td>
+                    <td data-sheets-value="[null,3,null,204]" data-sheets-numberformat="[null,2,&quot;0&quot;,1]" data-sheets-formula="=R[-19]C[2]*47+R[-18]C[2]*47.25+R[-17]C[2]*46.8+R[-16]C[2]*47+R[-15]C[2]*49.5+R[-14]C[2]*43.5+(R[-12]C[2]+R[-11]C[2]+R[-10]C[2])*30">204</td>
+                    <td data-sheets-value="[null,3,null,30]">30</td>
+                    <td data-sheets-value="[null,3,null,7]" data-sheets-numberformat="[null,0]" data-sheets-formula="=+ROUNDUP(+R[0]C[-2]/R[0]C[-1],0)">7</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- TABLA de Materiales -->
+</body>
+</html>

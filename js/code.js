@@ -29,25 +29,29 @@ var computos = {
         val : 0,
         clase : 'four',
         xpaletmacizo: 10,
-        xpaletu: 24
+        xpaletu: 24,
+        largo: 0
       },
       17.5 : {
         val : 0,
         clase : 'five',
         xpaletmacizo: 9,
-        xpaletu: 20
+        xpaletu: 20,
+        largo: 0
       } ,
       20 : {
         val : 0,
         clase : 'six',
         xpaletmacizo: 7,
-        xpaletu: 20
+        xpaletu: 20,
+        largo: 0
       }
   },
 
   restartEspesores : function () {
     for(var i in this.espesores){
       this.espesores[i].val = 0;
+      this.espesores[i].largo = 0;
     }
   },
 
@@ -61,7 +65,9 @@ var computos = {
 
     $( ".tabla-computos tbody tr" ).each(function(){
       var areaMuro = $(this).find('.largoMuro').val() * $(this).find('.altoMuro').val(),
+        largoMuro = parseInt($(this).find('.largoMuro').val()),
         aberturas = 5,
+        noPortante = $(this).find('.tipoMuro').val() === 'NP' ? true : false,
         espesorMuro = $(this).find('.espesorMuro').val(),
         espesores = computos.espesores;
 
@@ -73,24 +79,30 @@ var computos = {
       //Agregat Mts 2 Por Espesor
       computos.espesores[espesorMuro].val += areaMuro;
 
+      //Largo de muro para NP
+      if(espesorMuro>=15 && !noPortante){
+        computos.espesores[espesorMuro].largo += largoMuro;
+      }
+
       //Asigna Suma de Superficie Neta a resultado
       $(this).find('.resultado input').val(areaMuro);
     });
-
+    debugger;
     this.llenarTablaMateriales();
   },
 
   llenarTablaMateriales : function (){
     for(var i in this.espesores){
 
-      var clase = this.espesores[i].clase,
-        valor = this.espesores[i].val,
-        xpaletmacizo = this.espesores[i].xpaletmacizo,
-        xpaletu = this.espesores[i].xpaletu,
-        palletsMacizo = Math.round(valor/xpaletmacizo),
-        palletsU = i > 14 ? Math.round(valor/xpaletu) : 0;
+    //Declaro Variables
+    var clase = this.espesores[i].clase,
+      valor = this.espesores[i].val,
+      xpaletmacizo = this.espesores[i].xpaletmacizo,
+      xpaletu = this.espesores[i].xpaletu,
+      palletsMacizo = Math.round(valor/xpaletmacizo),
+      palletsU = i > 14 ? Math.round(valor/xpaletu) : 0;
 
-      //Rellena cantidad de palets
+      //Rellena cantidad de pallets
       $('#tabla_materiales .macizo_' + clase).html(palletsMacizo)
       $('#tabla_materiales .u_' + clase).html(palletsU)
 

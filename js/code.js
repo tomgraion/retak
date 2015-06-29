@@ -11,37 +11,40 @@ var computos = {
   espesores : {
       7.5 : {
         val : 0,
-        clase : 'one',
+        clase : '75',
         xpaletmacizo: 20
       } ,
       10 :  {
         val : 0,
-        clase : 'two',
+        clase : '10',
         xpaletmacizo: 15
       } ,
       12.5 : {
         val : 0,
-        clase : 'three',
+        clase : '125',
         xpaletmacizo: 12,
         clasemacizo: 'macizo'
       },
       15 :  {
         val : 0,
-        clase : 'four',
+        clase : '15',
+        claseU :'15u',
         xpaletmacizo: 10,
         xpaletu: 24,
         largo: 0
       },
       17.5 : {
         val : 0,
-        clase : 'five',
+        clase : '175',
+        claseU :'175u',
         xpaletmacizo: 9,
         xpaletu: 20,
         largo: 0
       } ,
       20 : {
         val : 0,
-        clase : 'six',
+        clase : '20',
+        claseU :'20u',
         xpaletmacizo: 7,
         xpaletu: 20,
         largo: 0
@@ -76,7 +79,7 @@ var computos = {
         areaMuro -= computos.calcularAbertura (this,i);
       };
 
-      //Agregat Mts 2 Por Espesor
+      //Agregar Mts 2 Por Espesor
       computos.espesores[espesorMuro].val += areaMuro;
 
       //Largo de muro para NP
@@ -87,7 +90,6 @@ var computos = {
       //Asigna Suma de Superficie Neta a resultado
       $(this).find('.resultado input').val(areaMuro);
     });
-    debugger;
     this.llenarTablaMateriales();
   },
 
@@ -96,11 +98,13 @@ var computos = {
 
     //Declaro Variables
     var clase = this.espesores[i].clase,
+      claseU = this.espesores[i].claseU,
       valor = this.espesores[i].val,
+      largo = Math.ceil(this.espesores[i].largo),
       xpaletmacizo = this.espesores[i].xpaletmacizo,
       xpaletu = this.espesores[i].xpaletu,
-      palletsMacizo = Math.round(valor/xpaletmacizo),
-      palletsU = i > 14 ? Math.round(valor/xpaletu) : 0;
+      palletsMacizo = Math.ceil(valor/xpaletmacizo),
+      palletsU = parseInt(i) > 14 ? Math.ceil(largo/xpaletu) : 0;
 
       //Rellena cantidad de pallets
       $('#tabla_materiales .macizo_' + clase).html(palletsMacizo)
@@ -108,6 +112,7 @@ var computos = {
 
       //Rellena m2 por espesor en tabla
       $('#tabla_materiales .' + clase).html(valor);
+      $('#tabla_materiales .' + claseU).html(largo);
     }
   },
 

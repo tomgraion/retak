@@ -12,18 +12,36 @@ var computos = {
       7.5 : {
         val : 0,
         clase : '75',
-        xpaletmacizo: 20
+        xpaletmacizo: 20,
+        largoDinteles :[
+          { largo: 1.2, cantidad : 0},
+          { largo: 1.5, cantidad : 0},
+          { largo: 2.0, cantidad : 0},
+          { largo: 2.5, cantidad : 0}
+        ]
       } ,
       10 :  {
         val : 0,
         clase : '10',
-        xpaletmacizo: 15
+        xpaletmacizo: 15,
+        largoDinteles :[
+          { largo: 1.2, cantidad : 0},
+          { largo: 1.5, cantidad : 0},
+          { largo: 2.0, cantidad : 0},
+          { largo: 2.5, cantidad : 0}
+        ]
       } ,
       12.5 : {
         val : 0,
         clase : '125',
         xpaletmacizo: 12,
-        clasemacizo: 'macizo'
+        clasemacizo: 'macizo',
+        largoDinteles :[
+          { largo: 1.2, cantidad : 0},
+          { largo: 1.5, cantidad : 0},
+          { largo: 2.0, cantidad : 0},
+          { largo: 2.5, cantidad : 0}
+        ]
       },
       15 :  {
         val : 0,
@@ -31,7 +49,13 @@ var computos = {
         claseU :'15u',
         xpaletmacizo: 10,
         xpaletu: 24,
-        largo: 0
+        largo: 0,
+        largoDinteles :[
+          { largo: 1.2, cantidad : 0},
+          { largo: 1.5, cantidad : 0},
+          { largo: 2.0, cantidad : 0},
+          { largo: 2.5, cantidad : 0}
+        ]
       },
       17.5 : {
         val : 0,
@@ -39,7 +63,13 @@ var computos = {
         claseU :'175u',
         xpaletmacizo: 9,
         xpaletu: 20,
-        largo: 0
+        largo: 0,
+        largoDinteles :[
+          { largo: 1.2, cantidad : 0},
+          { largo: 1.5, cantidad : 0},
+          { largo: 2.0, cantidad : 0},
+          { largo: 2.5, cantidad : 0}
+        ]
       } ,
       20 : {
         val : 0,
@@ -47,19 +77,53 @@ var computos = {
         claseU :'20u',
         xpaletmacizo: 7,
         xpaletu: 20,
-        largo: 0
+        largo: 0,
+        largoDinteles :[
+          { largo: 1.2, cantidad: 0},
+          { largo: 1.5, cantidad: 0},
+          { largo: 2.0, cantidad: 0},
+          { largo: 2.5, cantidad: 0}
+        ]
       }
+  },
+
+  restartDinteles : function (dinteles){
+    dinteles.forEach(function(dintel){
+       dintel.cantidad = 0;
+    })
   },
 
   restartEspesores : function () {
     for(var i in this.espesores){
       this.espesores[i].val = 0;
       this.espesores[i].largo = 0;
+      this.restartDinteles(this.espesores[i].largoDinteles);
     }
   },
 
-  sumarMetrosPorEspesor : function (espesorMuro, areaMuro){
-    //this.espesores;
+  sumarDintel : function (ancho, espesorMuro){
+    var largoDinteles = this.espesores[espesorMuro]['largoDinteles'];
+
+    largoDinteles.some(function(dintel){
+      if(ancho <= dintel.largo ){
+        dintel.cantidad ++;
+        return true;
+      }
+    })
+
+  },
+
+  calcularSuperficieNeta : function (scope, aberturas,areaMuro,espesorMuro){
+    for (var i = 1; i < aberturas; i++) {
+        var ancho = parseFloat($(scope).find('.ancho' + i).val()),
+          alto = parseFloat($(scope).find('.alto' + i).val()),
+          ancho = Math.max(ancho, alto);
+
+        //Suma Dintel y Resta al area total las aberturas
+        this.sumarDintel(ancho,espesorMuro);
+        areaMuro -= this.calcularAbertura (scope,i);
+    };
+    return areaMuro;
   },
 
   calcular: function (){
@@ -72,39 +136,42 @@ var computos = {
         aberturas = 5,
         noPortante = $(this).find('.tipoMuro').val() === 'NP' ? true : false,
         espesorMuro = $(this).find('.espesorMuro').val(),
-        espesores = computos.espesores;
+        espesores = computos.espesores,
+        areaMuro = computos.calcularSuperficieNeta(this,aberturas,areaMuro,espesorMuro);
 
-      //Calcula Superficie Neta
-      for (var i = 1; i < aberturas; i++) {
-        areaMuro -= computos.calcularAbertura (this,i);
-      };
-
-      //Agregar Mts 2 Por Espesor
       computos.espesores[espesorMuro].val += areaMuro;
-
-      //Largo de muro para NP
-      if(espesorMuro>=15 && !noPortante){
+      if(espesorMuro >=15 && !noPortante){
         computos.espesores[espesorMuro].largo += largoMuro;
       }
 
       //Asigna Suma de Superficie Neta a resultado
       $(this).find('.resultado input').val(areaMuro);
     });
+
     this.llenarTablaMateriales();
+  },
+
+  llenarDinteles : function (espesor,clase){
+    var rows = $('#tabla_materiales #dintel' + clase).children();
+
+    $(rows[1]).html(espesor.largoDinteles[0].cantidad);
+    $(rows[2]).html(espesor.largoDinteles[1].cantidad);
+    $(rows[3]).html(espesor.largoDinteles[2].cantidad);
+    $(rows[4]).html(espesor.largoDinteles[3].cantidad);
   },
 
   llenarTablaMateriales : function (){
     for(var i in this.espesores){
-
     //Declaro Variables
-    var clase = this.espesores[i].clase,
-      claseU = this.espesores[i].claseU,
-      valor = this.espesores[i].val,
-      largo = Math.ceil(this.espesores[i].largo),
-      xpaletmacizo = this.espesores[i].xpaletmacizo,
-      xpaletu = this.espesores[i].xpaletu,
-      palletsMacizo = Math.ceil(valor/xpaletmacizo),
-      palletsU = parseInt(i) > 14 ? Math.ceil(largo/xpaletu) : 0;
+      var espesor = this.espesores[i],
+        clase = espesor.clase,
+        claseU = espesor.claseU,
+        valor = espesor.val,
+        largo = Math.ceil(espesor.largo),
+        xpaletmacizo = espesor.xpaletmacizo,
+        xpaletu = espesor.xpaletu,
+        palletsMacizo = Math.ceil(valor/xpaletmacizo),
+        palletsU = parseInt(i) > 14 ? Math.ceil(largo/xpaletu) : 0;
 
       //Rellena cantidad de pallets
       $('#tabla_materiales .macizo_' + clase).html(palletsMacizo)
@@ -113,6 +180,8 @@ var computos = {
       //Rellena m2 por espesor en tabla
       $('#tabla_materiales .' + clase).html(valor);
       $('#tabla_materiales .' + claseU).html(largo);
+
+      this.llenarDinteles(espesor,clase);
     }
   },
 
@@ -134,9 +203,6 @@ var computos = {
     $ultimoTr.after($nuevoTr);
   },
 
-  calcularLadrillo : function (){
-
-  }
 };
 
 $( document ).ready( computos.init );

@@ -183,6 +183,27 @@ var computos = {
 
       this.llenarDinteles(espesor,clase);
     }
+    //fuera del for calcula adhesivo
+    this.llenarAdhesivo();
+  },
+
+  llenarAdhesivo: function (){
+    var suma = 0,
+      materiales = $('#tabla_materiales'),
+      suma = suma + parseFloat(materiales.find('.macizo_75').html()) * 47,
+      suma = suma + parseFloat(materiales.find('.macizo_10').html()) * 47.25,
+      suma = suma + parseFloat(materiales.find('.macizo_125').html()) * 46.8,
+      suma = suma + parseFloat(materiales.find('.macizo_15').html()) * 47,
+      suma = suma + parseFloat(materiales.find('.macizo_175').html()) * 49.35,
+      suma = suma + parseFloat(materiales.find('.macizo_20').html()) * 43.5;
+
+    suma = suma + (parseFloat(materiales.find('.u_15').html()) + parseFloat(materiales.find('.u_175').html())
+    + parseFloat(materiales.find('.u_20').html()))*30;
+    unidades = Math.ceil(suma/30);
+
+    materiales.find('#adhesivo').html(suma);
+    materiales.find('#adhesivoUn').html(unidades);
+
   },
 
   calcularAbertura : function (context,nro){

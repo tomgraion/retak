@@ -8,6 +8,37 @@ var computos = {
     });
 
   },
+  filasRevoques: [
+    {
+      tabla:'base_flexible',
+      fila : 'base_flexible'
+    },
+    {
+      tabla : 'cementicio',
+      fila : 'imprimacion'
+    },
+    {
+      tabla : 'cementicio',
+      fila : 'cementicio'
+    },
+    {
+      tabla : 'fibrado',
+      fila : 'fibrado'
+    },
+    {
+      tabla : 'fino_a_la_cal',
+      fila : 'imprimacion'
+    },
+    {
+      tabla : 'fino_a_la_cal',
+      fila : 'fino_a_la_cal'
+    },
+    {
+      tabla : 'enlucido_interior',
+      fila : 'enlucido'
+    }
+  ],
+  netaTotal : 0,
   espesores : {
       7.5 : {
         val : 0,
@@ -88,9 +119,9 @@ var computos = {
   },
 
   restartDinteles : function (dinteles){
-    dinteles.forEach(function(dintel){
+    jQuery.each(dinteles, function(index, dintel){
        dintel.cantidad = 0;
-    })
+    });
   },
 
   restartEspesores : function () {
@@ -127,8 +158,9 @@ var computos = {
   },
 
   calcular: function (){
-
+    var self = this;
     this.restartEspesores();
+    this.netaTotal = 0;
 
     $( ".tabla-computos tbody tr" ).each(function(){
       var areaMuro = $(this).find('.largoMuro').val() * $(this).find('.altoMuro').val(),
@@ -139,16 +171,42 @@ var computos = {
         espesores = computos.espesores,
         areaMuro = computos.calcularSuperficieNeta(this,aberturas,areaMuro,espesorMuro);
 
-      computos.espesores[espesorMuro].val += areaMuro;
+      self.espesores[espesorMuro].val += areaMuro;
       if(espesorMuro >=15 && !noPortante){
-        computos.espesores[espesorMuro].largo += largoMuro;
+        self.espesores[espesorMuro].largo += largoMuro;
       }
+      self.netaTotal += areaMuro;
 
       //Asigna Suma de Superficie Neta a resultado
       $(this).find('.resultado input').val(areaMuro);
     });
 
     this.llenarTablaMateriales();
+    this.llenarTablasRevoques();
+  },
+
+  llenarTablasRevoques : function (){
+    var self = this;
+
+    jQuery.each(this.filasRevoques, function(index, filaRevoque){
+       self.llenarTablaRevoque(filaRevoque.tabla,filaRevoque.fila);
+    });
+
+  },
+
+  llenarTablaRevoque : function (id_tabla,id_fila){
+    var fila = $('table#'+id_tabla ).find('#' + id_fila),
+      rendimiento = fila.find('#rendimiento').html(),
+      kg = fila.find('#kg').html(),
+      m2 = this.netaTotal,
+      total = m2*rendimiento/kg,
+      total = total.toFixed(2),
+      redondeo = Math.ceil(total);
+
+      fila.find('#m2').html(m2);
+      fila.find('#total').html(total);
+      fila.find('#redondeo').html(redondeo);
+
   },
 
   llenarDinteles : function (espesor,clase){
